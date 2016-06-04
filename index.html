@@ -1,0 +1,90 @@
+
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/game.css">
+	</head>
+
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+		<script src="js/engine.js"></script>
+
+		<div>
+			<canvas id="map-canvas" class="game" width="1024" height="512"></canvas>
+			<canvas id="player-canvas" class="game" width="1024" height="512"></canvas>
+		</div>
+
+		<div id="hud">
+			<div id="msg">
+			</div>			
+		</div>
+
+		<script>
+			window.addEventListener("keydown", function(e) {
+    			// space and arrow keys
+    			if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        			e.preventDefault();
+    			}
+			}, false);
+
+			var map_canvas = document.getElementById('map-canvas');
+			var map_ctx = map_canvas.getContext("2d");
+
+			var player_canvas = document.getElementById('player-canvas');
+			var player_ctx = player_canvas.getContext("2d");
+
+			var game;
+			var player;
+
+			//Fetch the game data
+			fetch_game("data/games/test/game.json", function(game_data){
+				game = game_data;
+
+				//Setup initial state
+				render_map(
+					map_ctx,
+					game.map,
+					game
+				);
+
+				console.log(game);
+
+				//Setup initial player consitions
+				player = setup_player(game);
+
+				render_player(
+					player_ctx,
+					player,
+					game
+				);
+
+				$(document).on("keyup", function(e){
+					//Calc new location
+					var location = [
+						player.location[0],
+						player.location[1]
+					];
+
+					if(e.keyCode == 37){
+						location[0] = player.location[0] - 1;
+					}
+	
+					if(e.keyCode == 38){
+						location[1] = player.location[1] - 1;
+					}
+
+					if(e.keyCode == 39){
+						location[0] = player.location[0] + 1;
+					}
+
+					if(e.keyCode == 40){
+						location[1] = player.location[1] + 1;
+					}
+
+					//Make the move!
+					move_player_to(player, game, location);
+					render_player(player_ctx, player, game);
+				});
+			});
+		</script>
+	</body>
+</html>

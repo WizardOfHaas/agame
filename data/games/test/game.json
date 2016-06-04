@@ -1,0 +1,39 @@
+{
+	"name": "Test Game",
+	"start_state": {
+		"room": {
+			"id": 0			
+		},
+		"player": {
+			"room": 0,
+			"item": -1,
+			"location": [11, 11],
+			"shade": true,
+			"view_distance": 10,
+			"style": {
+				"fill": "#000000"
+			},
+			"events": {
+				"move": "move",
+				"enter_room": "enter_room"
+			},
+			"inventory": []
+		}
+	},
+	"hud": {
+		"elements": {
+			"id": "#hud",
+			"msg": "#msg"
+		},
+		"messages": []
+	},
+	"map_set": {
+		"path": "data/games/test/map.json"
+	},
+	"item_set": {
+		"path": "data/games/test/items.json"
+	},
+	"scripts": {
+		"path": "data/games/test/scripts.js"
+	}
+}

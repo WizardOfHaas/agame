@@ -1,0 +1,45 @@
+{
+	"name": "Test Item Set",
+	"item_set": {
+		"rock": {
+			"size": [1, 1],
+			"style": {
+				"fill": "#C0C0C0",
+				"border_color": "#000000"
+			},
+			"solid": true
+		},
+		"puddle": {			
+			"size": [3, 3],
+			"style": {
+				"fill": "#00C0FF"
+			},
+			"solid": false
+		},
+		"water": {
+			"size": [1, 1],
+			"style": {
+				"fill": "#00C0FF"
+			},
+			"solid": false
+		}
+	},
+	"items": [
+		{
+			"item": "rock",
+			"location": [36, 14]
+		},
+		{
+			"item": "rock",
+			"location": [36, 15]
+		},
+		{
+			"item": "puddle",
+			"description": "Your feet get wet",
+			"location": [17, 10],
+			"events": {
+				"enter": "on_puddle"
+			}
+		}
+	]
+}

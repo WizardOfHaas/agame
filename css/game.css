@@ -1,0 +1,27 @@
+canvas.game{
+	border: 2px solid black;
+	position: absolute;
+}
+
+canvas#map-canvas{
+	z-index: 0;
+}
+
+canvas#player-canvas{
+	z-index: 1;
+}
+
+div#hud{
+	width: 100%;
+	position: absolute;
+	top: 530px;
+}
+
+div#msg{
+	width: 30%;
+	overflow: hidden;
+}
+
+div.msg{
+	margin: 5px;
+}
