@@ -31,6 +31,10 @@
 		},
 		{
 			"item": "rock",
+			"location": [25, 18]
+		},
+		{
+			"item": "rock",
 			"location": [36, 15]
 		},
 		{

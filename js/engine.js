@@ -231,8 +231,7 @@ function render_player(ctx, player, game){
 }
 
 function within_map(location, game){
-	return (game.merged_region.indexOf(location[0] + "," + location[1]) > -1) &&
-		(game.merged_items_region.indexOf(location[0] + "," + location[1]) == -1);
+	return (game.merged_region.indexOf(location[0] + "," + location[1]) > -1);
 }
 
 function within_room(location, game){
@@ -248,8 +247,9 @@ function within_room(location, game){
 	return room;
 }
 
-function player_within_map(player, game){
-	return game.merged_region.indexOf(player.location[0] + "," + player.location[1]) > -1;
+function player_within_map(location, game){
+	return (game.merged_region.indexOf(location[0] + "," + location[1]) > -1) &&
+		(game.merged_items_region.indexOf(location[0] + "," + location[1]) == -1);
 }
 
 function player_within_room(player, game){
@@ -289,7 +289,7 @@ function player_view(player, game){
 			var ray = line(player.location, tile);
 			if(
 				ray.map(function(location){
-					return within_map(location, game);
+					return player_within_map(location, game) || game.merged_items_region.indexOf(tile[0] + "," + tile[1]) != -1
 				}).reduce(function(a, b){
 					return a && b;
 				})
@@ -297,7 +297,7 @@ function player_view(player, game){
 				final_region.push(ray);
 			}
 		});
-	});
+	});	
 
 	//Flatten. Remove duplicates.
 	final_region = [].concat.apply([], final_region);
@@ -378,7 +378,7 @@ function on_item(location, game){
 }
 
 function move_player_to(player, game, location){
-	if(within_map(location, game)){
+	if(player_within_map(location, game)){
 		player.location = location;
 
 		if(player.path){
