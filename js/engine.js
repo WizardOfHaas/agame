@@ -348,6 +348,19 @@ function on_item(location, game){
 	return item;
 }
 
+function on_solid_item(location, game){
+	var item = -1;
+	var player_location = location[0] + "," + location[1];
+
+	for(var r = 0; r < game.merged_items_region.length; r++){
+		if(game.merged_items_region[r].indexOf(player_location) > -1){
+			item = r;
+		}
+	}
+
+	return item;	
+}
+
 function move_player_to(player, game, location){
 	if(player_within_map(location, game)){
 		player.location = location;
@@ -406,6 +419,12 @@ function move_player_to(player, game, location){
 
 		//Fire player hit item event (for solid items)
 		//Fire item hit item event (for solid items)
+		var item = on_solid_item(location, game);
+		if(item != -1){
+			if(game.items.items[item].events && game.items.items[item].events.hit){
+				item_events[game.items.items[item].events.hit](player, game, item);
+			}
+		}
 
 		return -1;
 	}
@@ -415,11 +434,10 @@ function move_player_to(player, game, location){
 
 function player_traj(player, game){
 	if(player.path.length > 2){
-		return
-			[
-				player.location[0] - player.path[player.path.length - 2][0],
-				player.location[1] - player.path[player.path.length - 2][1]
-			];		
+		return [
+			player.location[0] - player.path[player.path.length - 2][0],
+			player.location[1] - player.path[player.path.length - 2][1]
+		];		
 	}
 }
 
@@ -456,6 +474,28 @@ function update_item(old_item, new_item, game){
 	game.items.items.splice(old_item.id, 1);
 	game.items.items.push(new_item);
 	render_map(game.ctx, game.map, game);
+}
+
+function item_side(location, item){
+	if(location[0] == item.location[0] && location[1] <= item.location[1]){
+		return 0;
+	}
+
+	if(location[0] == item.location[0] && location[1] >= item.location[1]){
+		return 2;
+	}
+
+	if(location[1] == item.location[1] && location[0] >= item.location[0]){
+		return 1;
+	}
+
+	if(location[1] == item.location[1] && location[0] <= item.location[0]){
+		return 3;
+	}
+}
+
+function push_item(){
+	
 }
 
 //Line Approx stuff//////////////////////////////////////

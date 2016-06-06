@@ -34,19 +34,17 @@
 	"items": [
 		{
 			"item": "rock",
-			"location": [25, 12]
-		},
-		{
-			"item": "block",
-			"location": [25, 18]
-		},
-		{
-			"item": "block",
-			"location": [26, 18]
+			"location": [25, 12],
+			"events": {
+				"hit": "hit_rock"
+			}
 		},
 		{
 			"item": "rock",
-			"location": [36, 15]
+			"location": [36, 15],
+			"events": {
+				"hit": "hit_rock"
+			}
 		},
 		{
 			"item": "puddle",
@@ -55,6 +53,18 @@
 			"events": {
 				"enter": "on_puddle"
 			}
+		},
+		{
+			"item": "block",
+			"location": [26, 17]
+		},
+		{
+			"item": "block",
+			"location": [26, 18]
+		},
+		{
+			"item": "block",
+			"location": [25, 18]
 		}
 	]
 }

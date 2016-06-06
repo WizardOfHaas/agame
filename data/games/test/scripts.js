@@ -9,7 +9,8 @@ var map_events = {
 };
 
 var item_events = {
-	"on_puddle": item_on_puddle
+	"on_puddle": item_on_puddle,
+	"hit_rock": item_hit_rock
 };
 
 //Player event functions
@@ -50,4 +51,8 @@ function item_on_puddle(player, game, event){
 	if(!player.wetness || player.wetness == 0){
 		player.wetness = 3;
 	}
+}
+
+function item_hit_rock(player, game, event){
+	console.log(item_side(player.location, game.items.items[event]));
 }
