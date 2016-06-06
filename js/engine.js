@@ -185,10 +185,6 @@ function render_map(ctx, map, game){
 	game.merged_items_region = game.item_regions.solid_region.map(function(d){
 		return d[0] + "," + d[1];
 	});
-
-	game.merged_region = game.merged_region.filter(function(el){
-		return game.merged_items_region.indexOf(el) == -1;
-	});
 }
 
 //Player functions
@@ -235,7 +231,8 @@ function render_player(ctx, player, game){
 }
 
 function within_map(location, game){
-	return game.merged_region.indexOf(location[0] + "," + location[1]) > -1;
+	return (game.merged_region.indexOf(location[0] + "," + location[1]) > -1) &&
+		(game.merged_items_region.indexOf(location[0] + "," + location[1]) == -1);
 }
 
 function within_room(location, game){
@@ -273,24 +270,76 @@ function player_view(player, game){
 	var region = [];
 
 	//Create region
-	for(var c = 0; c < region_size; c++){
-		for(var r = 0; r < region_size; r++){
-			region.push([
+	for(var r = 0; r < region_size; r++){
+		var row = [];
+		for(var c = 0; c < region_size; c++){
+			row.push([
 				player.location[0] - Math.floor(region_size / 2) + r,
 				player.location[1] - Math.floor(region_size / 2) + c
 			]);
 		}
+		region.push(row);
 	}
 
-	//Filter for regions within map	
-	region = region.filter(function(location){
-		return within_map(location, game);
+	//Remove tiles not in direct view
+	var final_region = [];
+
+	region.map(function(row, r){
+		row.map(function(tile, c){
+			var ray = line(player.location, tile);
+			if(
+				ray.map(function(location){
+					return within_map(location, game);
+				}).reduce(function(a, b){
+					return a && b;
+				})
+			){
+				final_region.push(ray);
+			}
+		});
 	});
 
-	player.view = region;
+	//Flatten. Remove duplicates.
+	final_region = [].concat.apply([], final_region);
+	final_region = final_region.reduce(function(a,b){
+    	if (a.indexOf(b) < 0 ) a.push(b);
+    		return a;
+  	},[]);
 
-	return region;
+	player.view = final_region;
+
+	return final_region;
 }
+
+//Line Approx stuff//////////////////////////////////////
+function lerp(start, end, t) {
+    return start + t * (end-start);
+}
+
+function lerp_point(p0, p1, t) {
+    return [lerp(p0[0], p1[0], t),
+                     lerp(p0[1], p1[1], t)];
+}
+
+function diagonal_distance(p0, p1) {
+    var dx = p1[0] - p0[0], dy = p1[1] - p0[1];
+    return Math.max(Math.abs(dx), Math.abs(dy));
+}
+
+function round_point(p) {
+    return [Math.round(p[0]), Math.round(p[1])];
+}
+
+function line(p0, p1) {
+    var points = [];
+    var N = diagonal_distance(p0, p1);
+    for (var step = 0; step <= N; step++) {
+        var t = N == 0? 0.0 : step / N;
+        points.push(round_point(lerp_point(p0, p1, t)));
+    }
+    return points;
+}
+/////////////////////////////////////////////////////////
 
 function render_player_view(player, game){
 	player.ctx.beginPath();

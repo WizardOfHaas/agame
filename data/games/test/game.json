@@ -9,7 +9,7 @@
 			"item": -1,
 			"location": [11, 11],
 			"shade": true,
-			"view_distance": 10,
+			"view_distance": 11,
 			"style": {
 				"fill": "#000000"
 			},
