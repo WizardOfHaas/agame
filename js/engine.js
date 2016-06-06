@@ -289,7 +289,8 @@ function player_view(player, game){
 			var ray = line(player.location, tile);
 			if(
 				ray.map(function(location){
-					return player_within_map(location, game) || game.merged_items_region.indexOf(tile[0] + "," + tile[1]) != -1
+					return (player_within_map(location, game)) || 
+						((game.merged_items_region.indexOf(tile[0] + "," + tile[1]) != -1) && within_map(location, game))
 				}).reduce(function(a, b){
 					return a && b;
 				})
@@ -310,36 +311,6 @@ function player_view(player, game){
 
 	return final_region;
 }
-
-//Line Approx stuff//////////////////////////////////////
-function lerp(start, end, t) {
-    return start + t * (end-start);
-}
-
-function lerp_point(p0, p1, t) {
-    return [lerp(p0[0], p1[0], t),
-                     lerp(p0[1], p1[1], t)];
-}
-
-function diagonal_distance(p0, p1) {
-    var dx = p1[0] - p0[0], dy = p1[1] - p0[1];
-    return Math.max(Math.abs(dx), Math.abs(dy));
-}
-
-function round_point(p) {
-    return [Math.round(p[0]), Math.round(p[1])];
-}
-
-function line(p0, p1) {
-    var points = [];
-    var N = diagonal_distance(p0, p1);
-    for (var step = 0; step <= N; step++) {
-        var t = N == 0? 0.0 : step / N;
-        points.push(round_point(lerp_point(p0, p1, t)));
-    }
-    return points;
-}
-/////////////////////////////////////////////////////////
 
 function render_player_view(player, game){
 	player.ctx.beginPath();
@@ -486,3 +457,33 @@ function update_item(old_item, new_item, game){
 	game.items.items.push(new_item);
 	render_map(game.ctx, game.map, game);
 }
+
+//Line Approx stuff//////////////////////////////////////
+function lerp(start, end, t) {
+    return start + t * (end-start);
+}
+
+function lerp_point(p0, p1, t) {
+    return [lerp(p0[0], p1[0], t),
+                     lerp(p0[1], p1[1], t)];
+}
+
+function diagonal_distance(p0, p1) {
+    var dx = p1[0] - p0[0], dy = p1[1] - p0[1];
+    return Math.max(Math.abs(dx), Math.abs(dy));
+}
+
+function round_point(p) {
+    return [Math.round(p[0]), Math.round(p[1])];
+}
+
+function line(p0, p1) {
+    var points = [];
+    var N = diagonal_distance(p0, p1);
+    for (var step = 0; step <= N; step++) {
+        var t = N == 0? 0.0 : step / N;
+        points.push(round_point(lerp_point(p0, p1, t)));
+    }
+    return points;
+}
+/////////////////////////////////////////////////////////
