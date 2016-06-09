@@ -424,6 +424,10 @@ function move_player_to(player, game, location){
 			if(game.items.items[item].events && game.items.items[item].events.hit){
 				item_events[game.items.items[item].events.hit](player, game, item);
 			}
+
+			if(game.items.item_set[game.items.items[item].item].pushable){
+				push_item(player, game, game.items.items[item]);
+			}
 		}
 
 		return -1;
@@ -494,8 +498,40 @@ function item_side(location, item){
 	}
 }
 
-function push_item(){
-	
+var push_vector = [
+	[0, 1],
+	[-1, 0],
+	[0, -1],
+	[1, 0]
+];
+
+function push_item(player, game, item){
+	//Get the side
+	var side = item_side(player.location, item);
+
+	//Get the base location
+	var old_location = [];
+	old_location[0] = item.location[0];
+	old_location[1] = item.location[1];
+	var new_location = old_location;
+
+	//Update the location
+	new_location[0] += push_vector[side][0];
+	new_location[1] += push_vector[side][1];
+
+	//Is the location legal?
+	if(player_within_map(new_location, game)){
+		item.location = new_location;
+	}
+
+	//Render the game
+	render_map(game.ctx, game.map, game);
+
+	//Get the player in the right location
+	//player.location = old_location;
+
+	//Re-render the game
+	render_player(player.ctx, player, game);
 }
 
 //Line Approx stuff//////////////////////////////////////

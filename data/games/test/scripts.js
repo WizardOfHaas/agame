@@ -54,5 +54,5 @@ function item_on_puddle(player, game, event){
 }
 
 function item_hit_rock(player, game, event){
-	console.log(item_side(player.location, game.items.items[event]));
+	//console.log(item_side(player.location, game.items.items[event]));
 }
