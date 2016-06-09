@@ -513,7 +513,10 @@ function push_item(player, game, item){
 	var old_location = [];
 	old_location[0] = item.location[0];
 	old_location[1] = item.location[1];
-	var new_location = old_location;
+	
+	var new_location = [];
+	new_location[0] = item.location[0];
+	new_location[1] = item.location[1];
 
 	//Update the location
 	new_location[0] += push_vector[side][0];
@@ -522,13 +525,13 @@ function push_item(player, game, item){
 	//Is the location legal?
 	if(player_within_map(new_location, game)){
 		item.location = new_location;
+
+		//Get the player in the right location
+		player.location = old_location;
 	}
 
 	//Render the game
 	render_map(game.ctx, game.map, game);
-
-	//Get the player in the right location
-	//player.location = old_location;
 
 	//Re-render the game
 	render_player(player.ctx, player, game);
