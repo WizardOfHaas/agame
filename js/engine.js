@@ -525,15 +525,13 @@ function push_item(player, game, item){
 	//Is the location legal?
 	if(player_within_map(new_location, game)){
 		item.location = new_location;
-
-		//Get the player in the right location
-		player.location = old_location;
 	}
 
 	//Render the game
 	render_map(game.ctx, game.map, game);
 
 	//Re-render the game
+	move_player_to(player, game, old_location);
 	render_player(player.ctx, player, game);
 }
 

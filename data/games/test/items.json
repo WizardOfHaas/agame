@@ -48,6 +48,13 @@
 			}
 		},
 		{
+			"item": "rock",
+			"location": [36, 14],
+			"events": {
+				"hit": "hit_rock"
+			}
+		},
+		{
 			"item": "puddle",
 			"description": "Your feet get wet",
 			"location": [17, 10],
