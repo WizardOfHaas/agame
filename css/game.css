@@ -12,16 +12,34 @@ canvas#player-canvas{
 }
 
 div#hud{
-	width: 100%;
+	width: 1024px;
 	position: absolute;
 	top: 530px;
+	padding-left: 15px;
+	padding-top: 15px;
 }
 
 div#msg{
-	width: 30%;
 	overflow: hidden;
 }
 
-div.msg{
-	margin: 5px;
+div.player-stats{
+}
+
+div.game-container{
+	width: 1024px;
+	padding: 10px;
+}
+
+.hud-element{
+	border: 1px solid black;
+	border-radius: 5px;
+	height: 256px;
+}
+
+.hud-element > p{
+	text-align: center;
+	background-color: #FFFFFF;
+	position: relative;
+	top: -10px;
 }

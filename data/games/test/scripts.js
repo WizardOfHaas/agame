@@ -15,6 +15,8 @@ var item_events = {
 
 //Player event functions
 function player_move_event(player, game){
+	player.stats.xp++;
+
 	if(player.wetness && player.wetness > 0){
 		player.wetness--;
 

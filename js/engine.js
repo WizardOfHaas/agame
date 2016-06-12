@@ -228,6 +228,14 @@ function render_player(ctx, player, game){
 	);
 
 	ctx.stroke();
+
+	render_hud(player, game);
+}
+
+function render_hud(player, game){
+	//Populate HUD
+	$(game.hud.elements.hp).html(player.stats.hp + " hp");
+	$(game.hud.elements.xp).html(player.stats.xp + " xp");
 }
 
 function within_map(location, game){

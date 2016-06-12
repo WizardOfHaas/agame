@@ -10,6 +10,11 @@
 			"location": [11, 11],
 			"shade": true,
 			"view_distance": 11,
+			"stats": {
+				"max_hp": 100,
+				"hp": 100,
+				"xp": 0
+			},
 			"style": {
 				"fill": "#000000"
 			},
@@ -23,7 +28,9 @@
 	"hud": {
 		"elements": {
 			"id": "#hud",
-			"msg": "#msg"
+			"msg": "#msg",
+			"hp": "#hp",
+			"xp": "#xp"
 		},
 		"messages": []
 	},
