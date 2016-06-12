@@ -30,7 +30,8 @@
 			"id": "#hud",
 			"msg": "#msg",
 			"hp": "#hp",
-			"xp": "#xp"
+			"xp": "#xp",
+			"inv": "#inv"
 		},
 		"messages": []
 	},
