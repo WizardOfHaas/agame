@@ -234,8 +234,12 @@ function render_player(ctx, player, game){
 
 function render_hud(player, game){
 	//Populate HUD
+
+	//Player stats
 	$(game.hud.elements.hp).html(player.stats.hp + " hp");
 	$(game.hud.elements.xp).html(player.stats.xp + " xp");
+
+	//Inventory
 }
 
 function within_map(location, game){
@@ -417,6 +421,16 @@ function move_player_to(player, game, location){
 			player.item = item;
 			if(game.items.items[item].events && game.items.items[item].events.enter){
 				item_events[game.items.items[item].events.enter](player, game, item);
+			}
+
+			//Is it grabable?
+			if(game.items.item_set[game.items.items[item].item].grabable){
+				player.inventory.push(game.items.items[item]);
+				game.items.items[item].stats = game.items.item_set[game.items.items[item].item].stats;
+				game.items.items[item].description = game.items.item_set[game.items.items[item].item].description;
+				
+				print_msg("You grab " + game.items.item_set[game.items.items[item].item].description, game);
+				remove_item(game.items.items[item], game);
 			}
 		}else{
 			player.item = -1;

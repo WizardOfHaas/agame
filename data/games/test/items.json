@@ -30,6 +30,19 @@
 				"fill": "#00C0FF"
 			},
 			"solid": false
+		},
+		"knife": {
+			"size": [1, 1],
+			"style": {
+				"fill": "#FF0000"
+			},
+			"solid": false,
+			"grabable": true,
+			"stats": {
+				"att": 1,
+				"weight": 1
+			},
+			"description": "A simple knife"
 		}
 	},
 	"items": [
@@ -73,6 +86,10 @@
 		{
 			"item": "block",
 			"location": [25, 18]
+		},
+		{
+			"item": "knife",
+			"location": [25, 16]
 		}
 	]
 }

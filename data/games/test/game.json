@@ -13,7 +13,8 @@
 			"stats": {
 				"max_hp": 100,
 				"hp": 100,
-				"xp": 0
+				"xp": 0,
+				"carry": 10
 			},
 			"style": {
 				"fill": "#000000"
