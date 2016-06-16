@@ -240,6 +240,12 @@ function render_hud(player, game){
 	$(game.hud.elements.xp).html(player.stats.xp + " xp");
 
 	//Inventory
+	var inventory = "";
+	player.inventory.forEach(function(item){
+		inventory += "<p>" + item.description + ":" + item.stats.weight + "</p>";
+	});
+
+	$(game.hud.elements.inv).html(inventory);
 }
 
 function within_map(location, game){
