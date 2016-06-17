@@ -242,7 +242,7 @@ function render_hud(player, game){
 	//Inventory
 	var inventory = "";
 	player.inventory.forEach(function(item){
-		inventory += "<p>" + item.description + ":" + item.stats.weight + "</p>";
+		inventory += "<tr><td>" + item.description + "</td><td>" + item.stats.weight + "</td><td>att:" + item.stats.att + "</td></tr>";
 	});
 
 	$(game.hud.elements.inv).html(inventory);
