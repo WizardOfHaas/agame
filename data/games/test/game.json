@@ -32,7 +32,10 @@
 			"msg": "#msg",
 			"hp": "#hp",
 			"xp": "#xp",
-			"inv": "#inv"
+			"inv": "#inv",
+			"att": "#att",
+			"def": "#def",
+			"weapon": "#weapon"
 		},
 		"messages": []
 	},

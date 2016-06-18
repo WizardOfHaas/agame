@@ -39,6 +39,7 @@
 			"solid": false,
 			"grabable": true,
 			"stats": {
+				"type": "weapon",
 				"att": 1,
 				"weight": 1
 			},

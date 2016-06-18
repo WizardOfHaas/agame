@@ -242,7 +242,25 @@ function render_hud(player, game){
 	//Inventory
 	var inventory = "";
 	player.inventory.forEach(function(item){
-		inventory += "<tr><td>" + item.description + "</td><td>" + item.stats.weight + "</td><td>att:" + item.stats.att + "</td></tr>";
+		inventory += "<tr>";
+		inventory += "<td>" + item.description + "</td><td>" + item.stats.weight + "</td>";
+		inventory += "<td>";
+
+		if(item.stats.type == "weapon"){
+			inventory += "<a>wield</a> ";
+		}
+
+		if(item.stats.type == "armor"){
+			inventory += "<a>wear</a>";
+		}
+
+		if(item.stats.type == "usable"){
+			inventory += "<a>use</a>";
+		}
+
+		inventory += "<a>drop</a>";
+		inventory += "</td>";
+		inventory += "</tr>";
 	});
 
 	$(game.hud.elements.inv).html(inventory);
