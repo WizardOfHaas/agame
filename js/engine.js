@@ -241,24 +241,24 @@ function render_hud(player, game){
 
 	//Inventory
 	var inventory = "";
-	player.inventory.forEach(function(item){
+	player.inventory.forEach(function(item, i){
 		inventory += "<tr>";
 		inventory += "<td>" + item.description + "</td><td>" + item.stats.weight + "</td>";
 		inventory += "<td>";
 
 		if(item.stats.type == "weapon"){
-			inventory += "<a>wield</a> ";
+			inventory += "<a href='#' onclick='wield_item(" + i + ", player)'>wield</a> ";
 		}
 
 		if(item.stats.type == "armor"){
-			inventory += "<a>wear</a>";
+			inventory += "<a href='#' onclick='wear_item(" + i + ", player)'>wear</a>";
 		}
 
 		if(item.stats.type == "usable"){
-			inventory += "<a>use</a>";
+			inventory += "<a href='#' onclick='use_item(" + i + ", player)'>use</a>";
 		}
 
-		inventory += "<a>drop</a>";
+		inventory += "<a href='#' onclick='drop_item(" + i + ", player)'>drop</a>";
 		inventory += "</td>";
 		inventory += "</tr>";
 	});
@@ -507,6 +507,15 @@ function print_msg(msg, game){
 
 		$(game.hud.elements.msg).html(game.hud.messages.join(""));
 	}
+}
+
+//Player/item functions
+function drop_item(i, player){
+	console.log("Dropping " + player.inventory[i].description);
+}
+
+function wield_item(i, player){
+	console.log("Weilding " + player.inventory[i].description);
 }
 
 //Item functions
