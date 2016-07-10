@@ -15,6 +15,14 @@ function fetch_game(game_path, callback){
 	});
 }
 
+function render_image(ctx, url, location, game){
+	var img = new Image();
+	img.src = url;
+	img.onload = function(){
+  		ctx.drawImage(img, location[0]*g, location[1]*g, g, g);
+	};
+}
+
 function render_room(ctx, room, game){
 	ctx.beginPath();
 
@@ -104,6 +112,11 @@ function render_item(ctx, item, game){
 		(item_data.size[0])*g,
 		(item_data.size[1])*g
 	);
+
+	//Draw an image, if defined
+	if(item_data.style.image){
+		render_image(ctx, "data/games/test/img/" + item_data.style.image, [location[0], location[1]], game);
+	}
 
 	//Expand region to grid
 	var item_region = [];
