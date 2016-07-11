@@ -45,6 +45,21 @@
 				"weight": 1
 			},
 			"description": "a simple knife"
+		},
+		"fork": {
+			"size": [1, 1],
+			"style": {
+				"fill": "#00FF00",
+				"image": "fork.svg"
+			},
+			"solid": false,
+			"grabable": true,
+			"stats": {
+				"type": "weapon",
+				"att": 1,
+				"weight": 1
+			},
+			"description": "a shiny fork"
 		}
 	},
 	"items": [
@@ -92,6 +107,10 @@
 		{
 			"item": "knife",
 			"location": [25, 16]
+		},
+		{
+			"item": "fork",
+			"location": [25, 14]
 		}
 	]
 }
