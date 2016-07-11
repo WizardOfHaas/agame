@@ -254,7 +254,6 @@ function render_hud(player, game){
 
 	//Items in use
 	if(typeof(player.weapon) !== "undefined"){
-		console.log("Weilding " + player.inventory[player.weapon].description);
 		$(game.hud.elements.weapon).html("Weilding " + player.inventory[player.weapon].description);
 	}
 
@@ -530,7 +529,11 @@ function print_msg(msg, game){
 
 //Player/item functions
 function drop_item(i, player){
-	print_msg("You drop " + player.inventory[i].description, player.game);	
+	print_msg("You drop " + player.inventory[i].description, player.game);
+	//Remove from inventory
+	//Remove from player stats
+	//Add to items at player location
+	//Re-render hud amd display
 }
 
 function wield_item(i, player){
