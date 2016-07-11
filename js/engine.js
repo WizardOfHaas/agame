@@ -252,6 +252,12 @@ function render_hud(player, game){
 	$(game.hud.elements.hp).html(player.stats.hp + " hp");
 	$(game.hud.elements.xp).html(player.stats.xp + " xp");
 
+	//Items in use
+	if(typeof(player.weapon) !== "undefined"){
+		console.log("Weilding " + player.inventory[player.weapon].description);
+		$(game.hud.elements.weapon).html("Weilding " + player.inventory[player.weapon].description);
+	}
+
 	//Inventory
 	var inventory = "";
 	player.inventory.forEach(function(item, i){
@@ -524,11 +530,13 @@ function print_msg(msg, game){
 
 //Player/item functions
 function drop_item(i, player){
-	console.log("Dropping " + player.inventory[i].description);
+	print_msg("You drop " + player.inventory[i].description, player.game);	
 }
 
 function wield_item(i, player){
-	console.log("Weilding " + player.inventory[i].description);
+	print_msg("You wield " + player.inventory[i].description, player.game);
+	player.weapon = i;
+	render_hud(player, player.game);
 }
 
 //Item functions
