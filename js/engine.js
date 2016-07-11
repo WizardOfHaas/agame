@@ -253,32 +253,36 @@ function render_hud(player, game){
 	$(game.hud.elements.xp).html(player.stats.xp + " xp");
 
 	//Items in use
-	if(typeof(player.weapon) !== "undefined"){
+	if(typeof(player.weapon) !== "undefined" && player.weapon > -1){
 		$(game.hud.elements.weapon).html("Weilding " + player.inventory[player.weapon].description);
+	}else{
+		$(game.hud.elements.weapon).html("");
 	}
 
 	//Inventory
 	var inventory = "";
 	player.inventory.forEach(function(item, i){
-		inventory += "<tr>";
-		inventory += "<td>" + item.description + "</td><td>" + item.stats.weight + "</td>";
-		inventory += "<td>";
+		if(item){
+			inventory += "<tr>";
+			inventory += "<td>" + item.description + "</td><td>" + item.stats.weight + "</td>";
+			inventory += "<td>";
 
-		if(item.stats.type == "weapon"){
-			inventory += "<a href='#' onclick='wield_item(" + i + ", player)'>wield</a> ";
+			if(item.stats.type == "weapon"){
+				inventory += "<a href='#' onclick='wield_item(" + i + ", player)'>wield</a> ";
+			}
+
+			if(item.stats.type == "armor"){
+				inventory += "<a href='#' onclick='wear_item(" + i + ", player)'>wear</a>";
+			}
+
+			if(item.stats.type == "usable"){
+				inventory += "<a href='#' onclick='use_item(" + i + ", player)'>use</a>";
+			}
+
+			inventory += "<a href='#' onclick='drop_item(" + i + ", player)'>drop</a>";
+			inventory += "</td>";
+			inventory += "</tr>";
 		}
-
-		if(item.stats.type == "armor"){
-			inventory += "<a href='#' onclick='wear_item(" + i + ", player)'>wear</a>";
-		}
-
-		if(item.stats.type == "usable"){
-			inventory += "<a href='#' onclick='use_item(" + i + ", player)'>use</a>";
-		}
-
-		inventory += "<a href='#' onclick='drop_item(" + i + ", player)'>drop</a>";
-		inventory += "</td>";
-		inventory += "</tr>";
 	});
 
 	$(game.hud.elements.inv).html(inventory);
@@ -530,10 +534,22 @@ function print_msg(msg, game){
 //Player/item functions
 function drop_item(i, player){
 	print_msg("You drop " + player.inventory[i].description, player.game);
-	//Remove from inventory
+
 	//Remove from player stats
+	if(typeof(player.weapon) !== "undefined" && player.weapon == i){
+		player.weapon = -1;
+	}
+
 	//Add to items at player location
-	//Re-render hud amd display
+	var item = player.inventory[i];
+	item.location = player.location;
+	add_item(item, player.game);
+
+	//Remove from inventory
+	player.inventory[i] = null;
+
+	//Re-render hud amd display	
+	render_hud(player, game);
 }
 
 function wield_item(i, player){
