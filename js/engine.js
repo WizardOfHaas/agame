@@ -5,10 +5,13 @@ function fetch_game(game_path, callback){
 	$.get(game_path, function(game){
 		$.get(game.map_set.path, function(map){
 			$.get(game.item_set.path, function(items){
-				load_scripting(game, function(){
-					game.map = map;
-					game.items = items;
-					callback(game);
+				$.get(game.monsters.path, function(monsters){
+					load_scripting(game, function(){
+						game.map = map;
+						game.items = items;
+						game.monsters = monsters;
+						callback(game);
+					});
 				});
 			});
 		});
@@ -548,14 +551,16 @@ function drop_item(i, player){
 	//Remove from inventory
 	player.inventory[i] = null;
 
-	//Re-render hud amd display	
+	//Re-render hud
 	render_hud(player, game);
+	//May need to re-render display here.
 }
 
 function wield_item(i, player){
 	print_msg("You wield " + player.inventory[i].description, player.game);
 	player.weapon = i;
 	render_hud(player, player.game);
+	//May need to re-render display here.
 }
 
 //Item functions
@@ -628,6 +633,19 @@ function push_item(player, game, item){
 	//Re-render the game
 	move_player_to(player, game, old_location);
 	render_player(player.ctx, player, game);
+}
+
+//Monster code...
+function render_monster(ctx, monster, game){
+
+}
+
+function render_monsters(ctx, game){
+
+}
+
+function turn_monster(ctx, monster, game){
+
 }
 
 //Line Approx stuff//////////////////////////////////////

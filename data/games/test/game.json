@@ -45,6 +45,9 @@
 	"item_set": {
 		"path": "data/games/test/items.json"
 	},
+	"monsters": {
+		"path": "data/games/test/monsters.json"
+	},
 	"scripts": {
 		"path": "data/games/test/scripts.js"
 	}
