@@ -83,6 +83,7 @@
 			//Fetch the game data
 			fetch_game("data/games/test/game.json", function(game_data){
 				game = game_data;
+				game.map_canvas = 'map-canvas';
 
 				//Setup initial state
 				render_map(

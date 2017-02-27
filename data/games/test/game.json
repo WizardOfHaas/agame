@@ -8,7 +8,7 @@
 			"room": 0,
 			"item": -1,
 			"location": [11, 11],
-			"shade": true,
+			"shade": false,
 			"view_distance": 11,
 			"stats": {
 				"max_hp": 100,
@@ -40,7 +40,7 @@
 		"messages": []
 	},
 	"map_set": {
-		"path": "data/games/test/map.json"
+		"path": "data/games/test/maps/map.json"
 	},
 	"item_set": {
 		"path": "data/games/test/items.json"

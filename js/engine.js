@@ -18,25 +18,32 @@ function fetch_game(game_path, callback){
 	});
 }
 
-function render_image(ctx, url, location, game){
+function render_image(ctx, url, location, game, size){
 	var img = new Image();
 	img.src = url;
 	img.onload = function(){
-  		ctx.drawImage(img, location[0]*g, location[1]*g, g, g);
+  		ctx.drawImage(img, location[0]*g, location[1]*g, size[0]*g, size[1]*g);
 	};
 }
 
 function render_room(ctx, room, game){
 	ctx.beginPath();
 
-	ctx.fillStyle = room.style.fill || "#000000";
-	ctx.strokeStyle = room.style.border_color || "#000000";
-	ctx.lineWidth = room.style.border_width || "1";
+	ctx.fillStyle = room.style.fill || "rgba(0, 0, 200, 0)";
+	ctx.strokeStyle = room.style.border_color || "rgba(0, 0, 200, 0)";
+	ctx.lineWidth = room.style.border_width || 0;
 
 	var location = room.location;
 	var items = game.items;
 
 	//Draw Room
+	ctx.clearRect(
+		(location[0])*g,
+		(location[1])*g,
+		(room.size[0])*g,
+		(room.size[1])*g
+	);
+
 	ctx.fillRect(
 		(location[0])*g,
 		(location[1])*g,
@@ -118,7 +125,7 @@ function render_item(ctx, item, game){
 
 	//Draw an image, if defined
 	if(item_data.style.image){
-		render_image(ctx, "data/games/test/img/" + item_data.style.image, [location[0], location[1]], game);
+		render_image(ctx, "data/games/test/img/" + item_data.style.image, [location[0], location[1]], game, [1, 1]);
 	}
 
 	//Expand region to grid
@@ -176,6 +183,13 @@ function render_map(ctx, map, game){
 	var merged_regions = [];
 
 	//Render the map
+	ctx.beginPath();
+	ctx.rect(0, 0, 1024, 512);
+	ctx.fillStyle = "black";
+	ctx.fill();
+
+	$("#" + game.map_canvas).css('background-image', 'url("' + map.style.background_image + '")');
+
 	map.rooms.forEach(function(room){
 		var region = render_room(ctx, room, game);
 		map_regions.push(region);
@@ -565,7 +579,7 @@ function wield_item(i, player){
 
 //Item functions
 function add_item(item, game){
-	game.items.items.push(item);	
+	game.items.items.push(item);
 	render_map(game.ctx, game.map, game)
 }
 
@@ -625,6 +639,8 @@ function push_item(player, game, item){
 	//Is the location legal?
 	if(player_within_map(new_location, game)){
 		item.location = new_location;
+	}else{
+		return;
 	}
 
 	//Render the game
@@ -637,7 +653,50 @@ function push_item(player, game, item){
 
 //Monster code...
 function render_monster(ctx, monster, game){
+	var location = monster.location;
+	var monster_data = game.monsters.monster_set[monster.monster];
 
+	ctx.beginPath();
+
+	ctx.fillStyle = monster_data.style.fill || "#000000";
+	ctx.strokeStyle = monster_data.style.border_color || "#000000";
+	ctx.lineWidth = monster_data.style.border_width || "1";
+
+	//Draw Room
+	ctx.fillRect(
+		(location[0])*g,
+		(location[1])*g,
+		(monster_data.size[0])*g,
+		(monster_data.size[1])*g
+	);
+
+	ctx.rect(
+		(location[0])*g,
+		(location[1])*g,
+		(monster_data.size[0])*g,
+		(monster_data.size[1])*g
+	);
+
+	//Draw an image, if defined
+	if(monster_data.style.image){
+		render_image(ctx, "data/games/test/img/" + monster_data.style.image, [location[0], location[1]], game, [1, 1]);
+	}
+
+	//Expand region to grid
+	var monster_region = [];
+
+	for(var col = 0; col < monster_data.size[1]; col++){
+		for(var row = 0; row < monster_data.size[0]; row++){
+			monster_region.push(
+				[
+					row + monster.location[0],
+					col + monster.location[1]
+				]
+			);
+		}
+	}
+
+	return monster_region;
 }
 
 function render_monsters(ctx, game){

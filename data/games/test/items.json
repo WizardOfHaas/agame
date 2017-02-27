@@ -4,7 +4,7 @@
 		"rock": {
 			"size": [1, 1],
 			"style": {
-				"fill": "#C0C0C0",
+				"fill": "#505050",
 				"border_color": "#000000"
 			},
 			"solid": true,
