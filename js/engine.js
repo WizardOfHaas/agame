@@ -105,7 +105,7 @@ function render_item(ctx, item, game){
 	ctx.beginPath();
 
 	ctx.fillStyle = item_data.style.fill || "#000000";
-	ctx.strokeStyle = item_data.style.border_color || "#000000";
+	ctx.strokeStyle = item_data.style.border_color || "rgba(0,0,255,0)";
 	ctx.lineWidth = item_data.style.border_width || "1";
 
 	//Draw Room
@@ -122,6 +122,8 @@ function render_item(ctx, item, game){
 		(item_data.size[0])*g,
 		(item_data.size[1])*g
 	);
+
+	ctx.stroke();
 
 	//Draw an image, if defined
 	if(item_data.style.image){

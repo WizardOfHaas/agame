@@ -8,7 +8,10 @@
 				"border_color": "#000000"
 			},
 			"solid": true,
-			"pushable": true
+			"pushable": true,
+			"events": {
+				"hit": "hit_rock"
+			}
 		},
 		"block": {			
 			"size": [1, 1],
@@ -72,6 +75,13 @@
 		},
 		{
 			"item": "rock",
+			"location": [26, 12],
+			"events": {
+				"hit": "hit_rock"
+			}
+		},
+		{
+			"item": "rock",
 			"location": [36, 15],
 			"events": {
 				"hit": "hit_rock"
@@ -85,24 +95,26 @@
 			}
 		},
 		{
+			"item": "rock",
+			"location": [34, 15],
+			"events": {
+				"hit": "hit_rock"
+			}
+		},
+		{
+			"item": "rock",
+			"location": [34, 14],
+			"events": {
+				"hit": "hit_rock"
+			}
+		},
+		{
 			"item": "puddle",
 			"description": "Your feet get wet",
 			"location": [17, 10],
 			"events": {
 				"enter": "on_puddle"
 			}
-		},
-		{
-			"item": "block",
-			"location": [26, 17]
-		},
-		{
-			"item": "block",
-			"location": [26, 18]
-		},
-		{
-			"item": "block",
-			"location": [25, 18]
 		},
 		{
 			"item": "knife",
