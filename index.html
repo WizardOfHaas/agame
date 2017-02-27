@@ -66,7 +66,7 @@
 		<script>
 			window.addEventListener("keydown", function(e) {
     			// space and arrow keys
-    			if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+    			if([9, 32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         			e.preventDefault();
     			}
 			}, false);
@@ -127,9 +127,18 @@
 						location[1] = player.location[1] + 1;
 					}
 
+					if(e.keyCode == 9){
+						if ( $('#hud').css('visibility') == 'hidden' )
+    						$('#hud').css('visibility','visible');
+  						else
+    						$('#hud').css('visibility','hidden');
+					}
+
 					//Make the move!
-					move_player_to(player, game, location);
-					render_player(player_ctx, player, game);
+					if(e.keyCode != 9){
+						move_player_to(player, game, location);
+						render_player(player_ctx, player, game);
+					}
 				});
 			});
 		</script>
